@@ -4,15 +4,20 @@
 
     
   <url>
-    <loc>https://hackbuteers.github.io/2017/06/08/linux-login/</loc>
-    <lastmod>2017-06-16T07:45:04.000Z</lastmod>
+    <loc>https://hackbuteers.github.io/2017/06/14/ZK-Data-Sync/</loc>
+    <lastmod>2017-06-16T08:52:52.000Z</lastmod>
     <data>
         <display>
-        <title>Linux机器之间互相免登陆</title>
-        <pubTime>2017-06-08T02:52:59.000Z</pubTime>
+        <title>ZooKeeper - Data Sync</title>
+        <pubTime>2017-06-14T09:11:33.000Z</pubTime>
         
+        <tag>ZooKeeper</tag>
+         
          
            
+             
+              <breadCrumb title="ZooKeeper" url="https://hackbuteers.github.io/categories/ZooKeeper/"/>
+          
         </display>
     </data>
     </url>
@@ -20,14 +25,39 @@
     
   <url>
     <loc>https://hackbuteers.github.io/2017/06/14/tongji/</loc>
-    <lastmod>2017-06-16T07:43:28.000Z</lastmod>
+    <lastmod>2017-06-16T08:52:40.000Z</lastmod>
     <data>
         <display>
         <title>Hexo添加百度统计流程</title>
         <pubTime>2017-06-14T06:58:36.000Z</pubTime>
         
+        <tag>hexo</tag>
+         
          
            
+             
+              <breadCrumb title="hexo" url="https://hackbuteers.github.io/categories/hexo/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hackbuteers.github.io/2017/06/08/linux-login/</loc>
+    <lastmod>2017-06-16T08:52:16.000Z</lastmod>
+    <data>
+        <display>
+        <title>Linux机器之间互相免登陆</title>
+        <pubTime>2017-06-08T02:52:59.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https://hackbuteers.github.io/categories/Linux/"/>
+          
         </display>
     </data>
     </url>
@@ -35,29 +65,19 @@
     
   <url>
     <loc>https://hackbuteers.github.io/2017/06/13/idea_debug/</loc>
-    <lastmod>2017-06-16T07:43:03.000Z</lastmod>
+    <lastmod>2017-06-16T08:52:00.000Z</lastmod>
     <data>
         <display>
         <title>Intellij IDEA 配置Tomcat远程调试</title>
         <pubTime>2017-06-13T12:36:32.000Z</pubTime>
         
+        <tag>IDEA</tag>
+         
          
            
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://hackbuteers.github.io/2017/06/14/ZK-Data-Sync/</loc>
-    <lastmod>2017-06-14T14:08:15.000Z</lastmod>
-    <data>
-        <display>
-        <title>ZooKeeper - Data Sync</title>
-        <pubTime>2017-06-14T09:11:33.000Z</pubTime>
-        
-         
-           
+             
+              <breadCrumb title="IDEA" url="https://hackbuteers.github.io/categories/IDEA/"/>
+          
         </display>
     </data>
     </url>

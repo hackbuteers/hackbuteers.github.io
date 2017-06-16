@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://hackbuteers.github.io/"/>
-  <updated>2017-06-14T14:08:15.000Z</updated>
+  <updated>2017-06-16T08:52:52.000Z</updated>
   <id>https://hackbuteers.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://hackbuteers.github.io/2017/06/14/ZK-Data-Sync/"/>
     <id>https://hackbuteers.github.io/2017/06/14/ZK-Data-Sync/</id>
     <published>2017-06-14T09:11:33.000Z</published>
-    <updated>2017-06-14T14:08:15.000Z</updated>
+    <updated>2017-06-16T08:52:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>以下描述中用<strong>zk</strong>代指<strong>ZooKeeper</strong>，源码解释均基于<strong>ZooKeeper 3.4.6</strong></p>
 <h2 id="1、背景"><a href="#1、背景" class="headerlink" title="1、背景"></a>1、背景</h2><p>继上次的<strong>Session</strong>问题后，好学的小冷同学又认真地研究了下<strong>ZooKeeper Cluster</strong>的原理，问了我下面5个问题：</p>
@@ -92,6 +92,10 @@
     
     </summary>
     
+      <category term="ZooKeeper" scheme="https://hackbuteers.github.io/categories/ZooKeeper/"/>
+    
+    
+      <category term="ZooKeeper" scheme="https://hackbuteers.github.io/tags/ZooKeeper/"/>
     
   </entry>
   
@@ -100,7 +104,7 @@
     <link href="https://hackbuteers.github.io/2017/06/14/tongji/"/>
     <id>https://hackbuteers.github.io/2017/06/14/tongji/</id>
     <published>2017-06-14T06:58:36.000Z</published>
-    <updated>2017-06-16T07:43:28.000Z</updated>
+    <updated>2017-06-16T08:52:40.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="1、前言"><a href="#1、前言" class="headerlink" title="1、前言"></a>1、前言</h2><p>今天介绍一下<code>hexo</code>中如何使用统计插件，每天看到自己的博客访问量越来越高也是一种享受。</p>
 <h2 id="2、正文"><a href="#2、正文" class="headerlink" title="2、正文"></a>2、正文</h2><ul>
@@ -120,6 +124,10 @@
     
     </summary>
     
+      <category term="hexo" scheme="https://hackbuteers.github.io/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="https://hackbuteers.github.io/tags/hexo/"/>
     
   </entry>
   
@@ -128,7 +136,7 @@
     <link href="https://hackbuteers.github.io/2017/06/13/idea_debug/"/>
     <id>https://hackbuteers.github.io/2017/06/13/idea_debug/</id>
     <published>2017-06-13T12:36:32.000Z</published>
-    <updated>2017-06-16T07:43:03.000Z</updated>
+    <updated>2017-06-16T08:52:00.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="1、前言"><a href="#1、前言" class="headerlink" title="1、前言"></a>1、前言</h2><p>在服务器端开发过程中，由于服务器环境差异导致运行结果不符合预期。<br>所以就需要用到IDEA Debug 服务器代码，看起来貌似很高大上的事情。<br>今天就说说使用Intellij IDEA 配置Debug的方法。</p>
 <h2 id="2、环境和要求"><a href="#2、环境和要求" class="headerlink" title="2、环境和要求"></a>2、环境和要求</h2><p>IDEA：Intellij IDEA 2017.1.1<br>Web服务端：Tomcat 7.0.42</p>
@@ -144,6 +152,10 @@
     
     </summary>
     
+      <category term="IDEA" scheme="https://hackbuteers.github.io/categories/IDEA/"/>
+    
+    
+      <category term="IDEA" scheme="https://hackbuteers.github.io/tags/IDEA/"/>
     
   </entry>
   
@@ -152,7 +164,7 @@
     <link href="https://hackbuteers.github.io/2017/06/08/linux-login/"/>
     <id>https://hackbuteers.github.io/2017/06/08/linux-login/</id>
     <published>2017-06-08T02:52:59.000Z</published>
-    <updated>2017-06-16T07:45:04.000Z</updated>
+    <updated>2017-06-16T08:52:16.000Z</updated>
     
     <content type="html"><![CDATA[<p>A为某台Linux主机(机器Ip:10.19.17.28);<br>B为远程主机(机器Ip:10.11.8.25);<br>A和B的系统都是Linux，最终实现A主机免登陆到目标B主机。</p>
 <h2 id="1、生成公钥和私钥"><a href="#1、生成公钥和私钥" class="headerlink" title="1、生成公钥和私钥"></a>1、生成公钥和私钥</h2><h3 id="在A机器上执行命令"><a href="#在A机器上执行命令" class="headerlink" title="在A机器上执行命令"></a>在A机器上执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -t rsa</div></pre></td></tr></table></figure>
@@ -169,6 +181,10 @@
     
     </summary>
     
+      <category term="Linux" scheme="https://hackbuteers.github.io/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://hackbuteers.github.io/tags/Linux/"/>
     
   </entry>
   
