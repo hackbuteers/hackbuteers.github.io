@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://hackbuteers.github.io/"/>
-  <updated>2017-06-17T14:12:26.000Z</updated>
+  <updated>2017-06-18T12:34:47.000Z</updated>
   <id>https://hackbuteers.github.io/</id>
   
   <author>
@@ -16,11 +16,157 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Storm集群的搭建</title>
+    <link href="https://hackbuteers.github.io/2017/06/18/Storm%E9%9B%86%E7%BE%A4%E7%9A%84%E6%90%AD%E5%BB%BA/"/>
+    <id>https://hackbuteers.github.io/2017/06/18/Storm集群的搭建/</id>
+    <published>2017-06-18T12:34:02.000Z</published>
+    <updated>2017-06-18T12:34:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>安装Storm集群，需要依赖以下组件：</p>
+<blockquote>
+<p>Zookeeper<br>Python<br>Zeromq<br>Storm<br>JDK<br>JZMQ</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;安装Storm集群，需要依赖以下组件：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Zookeeper&lt;br&gt;Python&lt;br&gt;Zeromq&lt;br&gt;Storm&lt;br&gt;JDK&lt;br&gt;JZMQ&lt;/p&gt;
+&lt;/blockquote&gt;
+
+    
+    </summary>
+    
+      <category term="ZooKeeper" scheme="https://hackbuteers.github.io/categories/ZooKeeper/"/>
+    
+    
+      <category term="ZooKeeper" scheme="https://hackbuteers.github.io/tags/ZooKeeper/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Apache_Kafka入门（二）</title>
+    <link href="https://hackbuteers.github.io/2017/06/18/Apache-Kafka2/"/>
+    <id>https://hackbuteers.github.io/2017/06/18/Apache-Kafka2/</id>
+    <published>2017-06-18T12:27:35.000Z</published>
+    <updated>2017-06-18T12:39:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Apache-Kafka入门（二）"><a href="#Apache-Kafka入门（二）" class="headerlink" title="Apache_Kafka入门（二）"></a>Apache_Kafka入门（二）</h2><blockquote>
+<p>前面我们搭建了3个broker的kafka集群 本篇我们介绍一下kafka的一些配置以及java代码，从中学习和理解kafka的一些设计。</p>
+</blockquote>
+<h2 id="一、Producer和Consumer主要配置"><a href="#一、Producer和Consumer主要配置" class="headerlink" title="一、Producer和Consumer主要配置"></a>一、Producer和Consumer主要配置</h2><p>我们先来学习一下<strong>kafka</strong>关于<strong>producer</strong>和<strong>consumer</strong>的一些配置，通过配置信息对<strong>producer</strong>和<strong>consumer</strong>有个大体了解，同时也是在此做个记录，方便日后使用时查阅。</p>
+<ul>
+<li><p><strong>Producer</strong>主要配置：<a href="http://kafka.apache.org/documentation.html#producerconfigs" target="_blank" rel="external">官方文档</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 用于建立与kafka集群的连接，这个list仅仅影响用于初始化的hosts，来发现全部的servers。</span></div><div class="line"><span class="meta">#</span><span class="bash"><span class="comment">#格式：host1:port1,host2:port2,…，数量尽量不止一个，以防其中一个down了</span></span></div><div class="line">bootstrap.servers=192.168.127.10:9092,192.168.127.11:9092,192.168.127.12:9092</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> Producer用于压缩数据的压缩类型，取值：none, gzip, snappy, or lz4</span></div><div class="line">compression.type=none</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 消息序列化类，默认为kafka.serializer.DefaultEncoder，将消息实体转化为byte[]</span></div><div class="line">serializer.class=kafka.serializer.StringEncoder</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> producer接收消息ack的时机，默认为0</span></div><div class="line"><span class="meta">#</span><span class="bash"> 0:producer不会等待确认，直接添加到socket等待发送；</span></div><div class="line"><span class="meta">#</span><span class="bash"> 1:这意味着至少要等待leader已经成功将数据写入本地<span class="built_in">log</span>，但是并没有等待所有follower是否成功写入。这种情况下，如果follower没有成功备份数据，而此时leader又挂掉，则消息会丢失。</span></div><div class="line"><span class="meta">#</span><span class="bash"> all:这意味着leader需要等待所有备份都成功写入日志，这种策略会保证只要有一个备份存活就不会丢失数据。这是最强的保证。</span></div><div class="line">acks=0</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> Producer可以用来缓存数据的内存大小。</span></div><div class="line"><span class="meta">#</span><span class="bash"><span class="comment">#如果数据产生速度大于向broker发送的速度，producer会阻塞max.block.ms，超时则抛出异常</span></span></div><div class="line">buffer.memory=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> Producer默认会把两次发送时间间隔内收集到的所有Requests进行一次聚合然后再发送，以此提高吞吐量，而linger.ms则更进一步，这个参数为每次发送增加一些delay，以此来聚合更多的Message。</span></div><div class="line">linger.ms=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 请求的最大字节数。这也是对最大消息大小的有效限制。</span></div><div class="line"><span class="meta">#</span><span class="bash"> 注意：server具有自己对消息大小的限制，这些大小和这个设置不同。此项设置将会限制producer每次批量发送请求的数目，以防发出巨量的请求。</span></div><div class="line">max.request.size=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> TCP的接收缓存 SO_RCVBUF 空间大小，用于读取数据</span></div><div class="line">receive.buffer.bytes=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> client等待请求响应的最大时间,如果在这个时间内没有收到响应，客户端将重发请求，超过重试次数发送失败</span></div><div class="line">request.timeout.ms=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> TCP的发送缓存 SO_SNDBUF 空间大小，用于发送数据</span></div><div class="line">send.buffer.bytes=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 指定server等待来自followers的确认的最大时间，根据acks的设置，超时则返回error</span></div><div class="line">timeout.ms=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 在block前一个connection上允许最大未确认的requests数量。</span></div><div class="line"><span class="meta">#</span><span class="bash"> 当设为1时，即是消息保证有序模式，注意：这里的消息保证有序是指对于单个Partition的消息有顺序，因此若要保证全局消息有序，可以只使用一个Partition，当然也会降低性能</span></div><div class="line">max.in.flight.requests.per.connection=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 在第一次将数据发送到某topic时，需先fetch该topic的metadata，得知哪些服务器持有该topic的partition，该值为最长获取metadata时间</span></div><div class="line">metadata.fetch.timeout.ms=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 连接失败时，当我们重新连接时的等待时间</span></div><div class="line">reconnect.backoff.ms=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 在重试发送失败的request前的等待时间，防止若目的Broker完全挂掉的情况下Producer一直陷入死循环发送，折中的方法</span></div><div class="line">retry.backoff.ms=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> metrics系统维护可配置的样本数量，在一个可修正的window size</span></div><div class="line">metrics.sample.window.ms=30000</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 用于维护metrics的样本数</span></div><div class="line">metrics.num.samples=2</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 类的列表，用于衡量指标。实现MetricReporter接口</span></div><div class="line">metric.reporters=[]</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 强制刷新metadata的周期，即使leader没有变化</span></div><div class="line">metadata.max.age.ms=300000</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 与broker会话协议，取值：LAINTEXT, SSL, SASL_PLAINTEXT, SASL_SSL</span></div><div class="line">security.protocol=PLAINTEXT</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 分区类，实现Partitioner接口</span></div><div class="line">partitioner.class=class org.apache.kafka.clients.producer.internals.DefaultPartitioner</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 控制block的时长，当buffer空间不够或者metadata丢失时产生block</span></div><div class="line">max.block.ms=60000</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 关闭达到该时间的空闲连接</span></div><div class="line">connections.max.idle.ms=540000</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 当向server发出请求时，这个字符串会发送给server，目的是能够追踪请求源</span></div><div class="line">client.id=""</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 发生错误时，重传次数。当开启重传时，需要将`max.in.flight.requests.per.connection`设置为1，否则可能导致失序</span></div><div class="line">retries=0</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> key 序列化方式，类型为class，需实现Serializer interface</span></div><div class="line">key.serializer=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> value 序列化方式，类型为class，需实现Serializer interface</span></div><div class="line">value.serializer=</div></pre></td></tr></table></figure>
+</li>
+<li><p><em>Consumer</em>主要配置：<a href="http://kafka.apache.org/documentation.html#newconsumerconfigs" target="_blank" rel="external">官方文档</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 用于建立与kafka集群的连接，这个list仅仅影响用于初始化的hosts，来发现全部的servers。</span></div><div class="line">bootstrap.servers=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 用来唯一标识consumer进程所在组的字符串</span></div><div class="line">group.id=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 单次拉取的最大消息条数</span></div><div class="line">max.poll.records=</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> consumer失效时间，当长时间未收到心跳，并且大于这个时间，broker会将这个consumer从group中移除</span></div><div class="line">session.timeout.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 心跳间隔，需低于session.timeout.ms时间，建议不高于其1/3</span></div><div class="line">heartbeat.interval.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 如果设为<span class="literal">true</span>，consumer的offset将在后台定期自动提交</span></div><div class="line">enable.auto.commit</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 当enable.auto.commit设为<span class="literal">true</span>时，定期提交的时间间隔(ms)</span></div><div class="line">auto.commit.interval.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 分区策略，取值为range或roundrobin</span></div><div class="line">partition.assignment.strategy</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 自动重置offset，取值earliest、latest、none</span></div><div class="line"><span class="meta">#</span><span class="bash"> earliest将offset设置为开始位置</span></div><div class="line"><span class="meta">#</span><span class="bash"> latest将offset设置为开始位置</span></div><div class="line">auto.offset.reset</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 每次最小拉取的消息大小（byte）。Consumer会等待消息积累到一定尺寸后进行批量拉取。默认为1，代表有一条就拉一条</span></div><div class="line">fetch.min.bytes</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 拉取消息的最大值</span></div><div class="line">fetch.max.bytes</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 当消息没有积累到fetch.min.bytes值的最大等待时间</span></div><div class="line">fetch.max.wait.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 元数据刷新时间(无任何改变的情况下)</span></div><div class="line">metadata.max.age.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 每次从单个分区中拉取的消息最大尺寸（byte），默认为1M</span></div><div class="line">max.partition.fetch.bytes</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> tcp发送buffer数据的大小，如果值为-1，则为os默认值</span></div><div class="line">send.buffer.bytes</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> tcp读取buffer数据的大小，如果值为-1，则为os默认值</span></div><div class="line">receive.buffer.bytes</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 客户端id</span></div><div class="line">client.id</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 连接时间间隔</span></div><div class="line">reconnect.backoff.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 连接失败，重连时间间隔</span></div><div class="line">retry.backoff.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 是否开启CRC32校验，默认为开启</span></div><div class="line">check.crcs</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 指定key的反序列化方式</span></div><div class="line">key.deserializer</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 指定value的反序列化方式</span></div><div class="line">value.deserializer</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 关闭连接的最大空闲时间，默认为540000ms</span></div><div class="line">connections.max.idle.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 客户端等待响应最大时间</span></div><div class="line">request.timeout.ms</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 拦截器列表，默认没有拦截器</span></div><div class="line">interceptor.classes</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 内部topics信息是否可访问，默认为<span class="literal">true</span></span></div><div class="line">exclude.internal.topics</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="二、通过JAVA代码进入对Kafka的学习"><a href="#二、通过JAVA代码进入对Kafka的学习" class="headerlink" title="二、通过JAVA代码进入对Kafka的学习"></a>二、通过JAVA代码进入对Kafka的学习</h2><ul>
+<li>构建maven项目，引入依赖<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.kafka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kafka-clients<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.10.2.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2-1-producer-发布消息"><a href="#2-1-producer-发布消息" class="headerlink" title="2.1 producer 发布消息"></a>2.1 producer 发布消息</h3><ul>
+<li>Producer JAVA代码</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Apache-Kafka入门（二）&quot;&gt;&lt;a href=&quot;#Apache-Kafka入门（二）&quot; class=&quot;headerlink&quot; title=&quot;Apache_Kafka入门（二）&quot;&gt;&lt;/a&gt;Apache_Kafka入门（二）&lt;/h2&gt;&lt;blockquote&gt;
+
+    
+    </summary>
+    
+      <category term="Kafka" scheme="https://hackbuteers.github.io/categories/Kafka/"/>
+    
+    
+      <category term="Kafka" scheme="https://hackbuteers.github.io/tags/Kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Apache_Kafka入门（一）</title>
+    <link href="https://hackbuteers.github.io/2017/06/18/Apache-Kafka1/"/>
+    <id>https://hackbuteers.github.io/2017/06/18/Apache-Kafka1/</id>
+    <published>2017-06-18T12:27:22.000Z</published>
+    <updated>2017-06-18T12:35:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一、kafka是什么？"><a href="#一、kafka是什么？" class="headerlink" title="一、kafka是什么？"></a>一、kafka是什么？</h2><p><strong>kafka</strong>是一个分布式的、可分区的、可复制的消息系统。它使用<strong>Scala</strong>编写，它以可水平扩展和高吞吐率而被广泛使用。</p>
+<h2 id="二、产生背景"><a href="#二、产生背景" class="headerlink" title="二、产生背景"></a>二、产生背景</h2><p><strong>Kafka</strong>是一个消息系统，用作<strong>LinkedIn</strong>的活动流（<strong>Activity Stream</strong>）和运营数据处理管道（<strong>Pipeline</strong>）的基础。活动流数据是几乎所有站点在对其网站使用情况做报表时都要用到的数据中最常规的部分。活动数据包括页面访问量（Page View）、被查看内容方面的信息以及搜索情况等内容。这种数据通常的处理方式是先把各种活动以日志的形式写入某种文件，然后周期性地对这些文件进行统计分析。运营数据指的3是服务器的性能数据（CPU、IO使用率、请求时间、服务日志等等数据)。运营数据的统计方法种类繁多。</p>
+<h2 id="三、基本架构图"><a href="#三、基本架构图" class="headerlink" title="三、基本架构图"></a>三、基本架构图</h2><p><a href="http://orimyicvd.bkt.clouddn.com/kafka1.png" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/kafka1.png"></a></p>
+<h2 id="四、基本概念的解释"><a href="#四、基本概念的解释" class="headerlink" title="四、基本概念的解释"></a>四、基本概念的解释</h2><ul>
+<li>1、Broker Kafka集群包含一个或多个服务器，这种服务器被称为broker。broker端不维护数据的消费状态，提升了性能。直接使用磁盘进行存储，线性读写，速度快：避免了数据在JVM内存和系统内存之间的复制，减少耗性能的创建对象和垃圾回收。</li>
+<li>2、Producer 负责发布消息到Kafka broker</li>
+<li>3、Consumer 消息消费者，向Kafka broker读取消息的客户端，consumer从broker拉取(pull)数据并进行处理。</li>
+<li>4、Topic 每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）</li>
+<li>5、Partition Parition是物理上的概念，每个Topic包含一个或多个Partition.</li>
+<li>6、Consumer Group 每个Consumer属于一个特定的Consumer Group（可为每个Consumer指定group name，若不指定group name则属于默认的group）</li>
+</ul>
+<h2 id="五、kafka集群环境搭建"><a href="#五、kafka集群环境搭建" class="headerlink" title="五、kafka集群环境搭建"></a>五、kafka集群环境搭建</h2><h3 id="1-Zookeeper集群搭建"><a href="#1-Zookeeper集群搭建" class="headerlink" title="1) Zookeeper集群搭建"></a>1) Zookeeper集群搭建</h3><blockquote>
+<p>Kafka集群是把状态保存在Zookeeper中的，首先要搭建Zookeeper集群。 Zookeeper环境的搭建请参照《Storm集群的搭建》。需要注意的是zookeeper需要java环境，所以记得先安装JDK。</p>
+</blockquote>
+<h3 id="2-Kafka集群搭建"><a href="#2-Kafka集群搭建" class="headerlink" title="2) Kafka集群搭建"></a>2) Kafka集群搭建</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;一、kafka是什么？&quot;&gt;&lt;a href=&quot;#一、kafka是什么？&quot; class=&quot;headerlink&quot; title=&quot;一、kafka是什么？&quot;&gt;&lt;/a&gt;一、kafka是什么？&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;kafka&lt;/strong&gt;是一个分布式的、可分区的
+    
+    </summary>
+    
+      <category term="Kafka" scheme="https://hackbuteers.github.io/categories/Kafka/"/>
+    
+    
+      <category term="Kafka" scheme="https://hackbuteers.github.io/tags/Kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ZooKeeper - 从懵逼到淡定</title>
+    <link href="https://hackbuteers.github.io/2017/06/18/ZooKeeper/"/>
+    <id>https://hackbuteers.github.io/2017/06/18/ZooKeeper/</id>
+    <published>2017-06-18T12:20:30.000Z</published>
+    <updated>2017-06-18T12:25:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>以下描述中用<strong>zk</strong>代指<strong>ZooKeeper</strong>，源码解释均基于<strong>ZooKeeper 3.4.6</strong></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>04.11对Pigeon使用的zk集群执行变更导致集群4分钟不可用，详细如下：</p>
+<ul>
+<li>Pigeon使用的zk集群原本有5个节点（myid为0~5，以下描述中使用zk0指代id为0的节点，依此类推）</li>
+<li>zk0、zk1、zk2提供对外提供服务（其中，zk2为leader），zk3、zk4从未对外提供服务（服务域名中未包含）</li>
+<li>4月初机柜迁移，未服务的zk3、zk4在需要迁移的机柜上，将zk3、zk4先下线了</li>
+<li>从提供服务的zk0、zk1、zk2里的配置中删除已经下线的zk3、zk4，择机重启</li>
+<li>计划04.11进行重启节点的变更</li>
+<li>此时之前下线的zk3、zk4已经关机，无法ping通</li>
+<li>2017-04-11 11:19:13重启完zk1之后，集群选举持续无法成功，导致4分钟不可用</li>
+<li>直到2017-04-11 11:23:01把其余两个节点（zk0、zk2）也重启了，集群才恢复可用</li>
+</ul>
+<p>变更之前在线下模拟了操作流程，一切正常，对客户端影响都在数秒以内。<br>这个问题，经过数天的排查，终于找到原因并且重现了。<br><strong>05.09</strong>对<strong>Kafka</strong>依赖的<strong>zk</strong>集群下线节点<strong>变更</strong>，利用前面的经验制定了下线的步骤，表现与预期相符，至此，验证了结论。<br>转眼，已经过了一个月了，小心翼翼地分享下彼时的排查过程，当然，写得异常混乱。</p>
+<h2 id="懵逼"><a href="#懵逼" class="headerlink" title="懵逼"></a>懵逼</h2><p>对于故障排查，可以按照<strong>是否有现场、是否能重现、是否有详细上下文信息</strong>等几个因素分为划分，因素里面否越多，排查难度越大。<br><strong>04.11</strong>的问题等到排查的时候，属于<strong>无现场/不能重现/有详细上下文信息</strong>，毕竟有完整的<strong>ZooKeeper</strong>的日志。</p>
+<p><strong>zk1</strong>日志内容摘取部分如下：</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;以下描述中用&lt;strong&gt;zk&lt;/strong&gt;代指&lt;strong&gt;ZooKeeper&lt;/strong&gt;，源码解释均基于&lt;strong&gt;ZooKeeper 3.4.6&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;header
+    
+    </summary>
+    
+      <category term="ZooKeeper" scheme="https://hackbuteers.github.io/categories/ZooKeeper/"/>
+    
+    
+      <category term="ZooKeeper" scheme="https://hackbuteers.github.io/tags/ZooKeeper/"/>
+    
+  </entry>
+  
+  <entry>
     <title>ZooKeeper - Session Lifetime</title>
     <link href="https://hackbuteers.github.io/2017/06/17/ZK-session/"/>
     <id>https://hackbuteers.github.io/2017/06/17/ZK-session/</id>
     <published>2017-06-17T12:36:15.000Z</published>
-    <updated>2017-06-17T14:12:26.000Z</updated>
+    <updated>2017-06-18T12:17:42.000Z</updated>
     
     <content type="html"><![CDATA[<p>以下描述中用<strong>zk</strong>代指<strong>ZooKeeper</strong>，源码解释均基于<strong>ZooKeeper 3.4.6</strong></p>
 <h2 id="1、背景"><a href="#1、背景" class="headerlink" title="1、背景"></a>1、背景</h2><p>公司同事上周问了两个问题：</p>
@@ -131,7 +277,47 @@
 <li>操作<strong>ZooKeeperServer.zkDb</strong></li>
 <li>返回<strong>response</strong>给客户端</li>
 </ul>
-<h2 id="辅线处理链"><a href="#辅线处理链" class="headerlink" title="辅线处理链"></a>辅线处理链</h2>]]></content>
+<h2 id="辅线处理链"><a href="#辅线处理链" class="headerlink" title="辅线处理链"></a>辅线处理链</h2><p><strong>SyncReqeustProcessor</strong>也是比较重要的，和<strong>FinalRequestProcessor</strong>一样，也是<strong>Standalone、Follower、Leader</strong>这三种角色都会有的。这个<strong>RequestProcessor</strong>其实只做一件事情：写日志，可以认为是两阶段提交的第一阶段。<br><strong>SyncReqeustProcessor.processRequest</strong>有两个调用的地方：</p>
+<ul>
+<li>在<strong>Follower</strong>中，<strong>Follower.processPacket</strong>方法中收到<strong>Leader</strong>发过来的<strong>Leader.PROPOSAL</strong>会调用<strong>FollowerZooKeeperServer.logRequest</strong>，然后会调用<strong>SyncReqeustProcessor.processRequest</strong></li>
+<li>在<strong>Leader</strong>中，<strong>ProposalRequestProcessor.processRequest</strong>对于写操作，不仅会<strong>zks.getLeader().propose(request)</strong>通知所有<strong>Follower</strong>去写日志，还会调用<strong>SyncReqeustProcessor.processRequest</strong>来写入<strong>Leader</strong>自己的本地日志。</li>
+</ul>
+<p><strong>SendAckRequestProcessor</strong>是<strong>Follower</strong>专有的<strong>RequestProcessor</strong>，也是唯一实现了<strong>Flushable</strong>接口的<strong>RequestProcessor</strong>。做的事情比较纯粹，给<strong>Leader</strong>回一个<strong>Leader.ACK</strong>的<strong>QuorumPacket</strong>。</p>
+<h2 id="Leader的处理"><a href="#Leader的处理" class="headerlink" title="Leader的处理"></a>Leader的处理</h2><p>上述<strong>Follower</strong>的处理中，我们提到了<strong>FollowerRequestProcessor</strong>会：</p>
+<blockquote>
+<p>调用<strong>zks.getFollower().request(request)</strong>把写请求转发给<strong>Leader</strong></p>
+</blockquote>
+<p>从这一刻开始，<strong>Leader</strong>的处理开始登上历史舞台。<br>在<strong>LearnerHandler.run</strong>中收到<strong>Leader.REQUEST</strong>，会调用<strong>leader.zk.submitRequest(si)</strong>，代码如下：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> <span class="type">Leader</span>.<span class="type">REQUEST</span>:</div><div class="line">    bb = <span class="type">ByteBuffer</span>.wrap(qp.getData());</div><div class="line">    sessionId = bb.getLong();</div><div class="line">    cxid = bb.getInt();</div><div class="line">    <span class="class"><span class="keyword">type</span> </span>= bb.getInt();</div><div class="line">    bb = bb.slice();</div><div class="line">    <span class="type">Request</span> si;</div><div class="line">    <span class="comment">// 对于OpCode.sync请求，会创建一个不一样的包，LearnerSyncRequest</span></div><div class="line">    <span class="keyword">if</span>(<span class="class"><span class="keyword">type</span> <span class="title">==</span> <span class="title">OpCode</span>.<span class="title">sync</span>)</span>&#123;</div><div class="line">        si = <span class="keyword">new</span> <span class="type">LearnerSyncRequest</span>(<span class="keyword">this</span>, sessionId, cxid, <span class="class"><span class="keyword">type</span>, <span class="title">bb</span>, <span class="title">qp</span>.<span class="title">getAuthinfo</span>(<span class="params"></span>))</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        si = <span class="keyword">new</span> <span class="type">Request</span>(<span class="literal">null</span>, sessionId, cxid, <span class="class"><span class="keyword">type</span>, <span class="title">bb</span>, <span class="title">qp</span>.<span class="title">getAuthinfo</span>(<span class="params"></span>))</span>;</div><div class="line">    &#125;</div><div class="line">    si.setOwner(<span class="keyword">this</span>);</div><div class="line">    <span class="comment">// 这里会调用submitRequest，让LeaderZooKeeperServer来处理请求</span></div><div class="line">    leader.zk.submitRequest(si);</div><div class="line">    <span class="keyword">break</span>;</div></pre></td></tr></table></figure></p>
+<p>上面讲<strong>Follower</strong>的处理时，提到了：</p>
+<blockquote>
+<p>请求到达<strong>Follower</strong>后，<strong>Follower</strong>会调用<strong>ZooKeeperServer.submitRequest</strong>，然后会调用<strong>firstProcessor.processRequest</strong></p>
+</blockquote>
+<p><strong>Leader</strong>和<strong>Follower</strong>一样，都会调用<strong>ZooKeeperServer.submitRequest</strong>，这里面逻辑是一样的，区别在于处理链不一样。<strong>Leader</strong>的处理链是所有角色中最复杂的，涉及到7个<strong>RequestProcessor</strong>，如下图所示：<br><a href="http://orimyicvd.bkt.clouddn.com/Request.png" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/Request.png"></a><br><strong>CommitProcessor、SyncRequestProcessor、FinalRequestProcessor</strong>都是老熟人了，在上面刚见过。下面介绍下另外的4个<strong>RequestProcessor</strong>。<br><strong>PrepRequestProcessor</strong>并非是<strong>Leader</strong>专有的，<strong>Standalone</strong>模式也会有。这个<strong>RequestProcessor</strong>也是所有<strong>RequestProcessor</strong>实现中最复杂的，从这个类对应代码文件的行数就可以看出来：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">find * -name <span class="string">'*Processor.java'</span>  |xargs wc -l |sort -k <span class="number">1</span></div><div class="line">   <span class="number">44</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server/RequestProcessor.java</div><div class="line">   <span class="number">48</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server/UnimplementedRequestProcessor.java</div><div class="line">   <span class="number">54</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server<span class="regexp">/quorum/</span>AckRequestProcessor.java</div><div class="line">   <span class="number">80</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server<span class="regexp">/quorum/</span>SendAckRequestProcessor.java</div><div class="line">   <span class="number">93</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server<span class="regexp">/quorum/</span>ProposalRequestProcessor.java</div><div class="line">  <span class="number">112</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server<span class="regexp">/quorum/</span>FollowerRequestProcessor.java</div><div class="line">  <span class="number">126</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server<span class="regexp">/quorum/</span>ObserverRequestProcessor.java</div><div class="line">  <span class="number">128</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server<span class="regexp">/quorum/</span>ReadOnlyRequestProcessor.java</div><div class="line">  <span class="number">192</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server<span class="regexp">/quorum/</span>CommitProcessor.java</div><div class="line">  <span class="number">235</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server/SyncRequestProcessor.java</div><div class="line">  <span class="number">418</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server/FinalRequestProcessor.java</div><div class="line">  <span class="number">766</span> src<span class="regexp">/java/</span>main<span class="regexp">/org/</span>apache<span class="regexp">/zookeeper/</span>server/PrepRequestProcessor.java</div></pre></td></tr></table></figure></p>
+<p>复杂也是正常的，毕竟与<strong>zk api</strong>语义相关的逻辑基本都在这里实现的。<br><strong>PrepRequestProcessor.pRequest</strong>是这个<strong>RequestProcessor</strong>最重要的实现，这个方法里面做两件事情：</p>
+<ul>
+<li>调用<strong>pRequest2Txn</strong>设置部分请求的<strong>request.hdr</strong>和<strong>request.txn</strong>，<strong>pRequest2Txn</strong>里面会完成一些接口语义相关的逻辑，比如上面提到的，收到<strong>OpCode.create</strong>请求时会去设置<strong>Ephemeral Owner</strong></li>
+<li>调用<strong>nextProcessor.processRequest</strong>，也就是<strong>ProposalRequestProcessor.processRequest</strong></li>
+</ul>
+<p><strong>ProposalRequestProcessor</strong>是<strong>Leader</strong>专有的<strong>RequestProcessor</strong>，会做三件事情：</p>
+<ul>
+<li>调用<strong>nextProcessor.processRequest</strong>，也就是<strong>CommitProcessor.processRequest</strong></li>
+<li>对于设置了<strong>request.hdr</strong>的请求，调用<strong>zks.getLeader().propose(request)</strong>向所有的<strong>Follower</strong>发送<strong>Leader.PROPOSAL</strong>请求。上面的描述中提到了<strong>Follower</strong>收到<strong>Leader</strong>发送过来的<strong>Leader.PROPOSAL</strong>请求后，最终会调用<strong>SyncReqeustProcessor.processRequest</strong>去写入日志。那么<strong>Leader</strong>自己的日志什么时候写呢，就在下一步了。</li>
+<li>对于设置了<strong>request.hdr</strong>的请求，调用<strong>syncProcessor.processRequest</strong>来向<strong>Leader</strong>自己的日志里写入记录。这里会有疑问，什么是”设置了<strong>request.hdr</strong>的请求”呢？除了<strong>create、delete、setData、setACL、multi、createSession、closeSession</strong>这些常见的写操作之外，还有一个<strong>check</strong>。</li>
+</ul>
+<p><strong>ToBeAppliedRequestProcessor</strong>是<strong>Leader</strong>专有的<strong>RequestProcessor</strong>，也是唯一一个内部类的<strong>RequestProcessor</strong>。做的事情非常简单，只是在<strong>CommitProcessor</strong>和<strong>FinalRequestProcessor</strong>之前做个桥接。唯一的作用在于维护一个<strong>toBeApplied</strong>的队列，这个队列里面包括了已经达到<strong>quorum</strong>，但是还没有应用到<strong>FinalRequestProcessor</strong>的<strong>Proposal</strong>。</p>
+<p><strong>AckRequestProcessor</strong>是<strong>Leader</strong>专有的<strong>RequestProcessor</strong>，和<strong>Follower</strong>专有的<strong>SendAckRequestProcessor</strong>长得很像，做的逻辑也比较类似。调用<strong>leader.processAck</strong>，相当于写一个本地的<strong>Ack</strong>。<br>综上所述，<strong>CreateSession</strong>操作完整的处理流程如下图：<br><a href="http://orimyicvd.bkt.clouddn.com/CreateSession.png" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/CreateSession.png"></a></p>
+<h2 id="选做题"><a href="#选做题" class="headerlink" title="选做题"></a>选做题</h2><p>分享这个问题的时候遇到两个问题，我不太能回答上来，想请大家帮我解答一下：</p>
+<ul>
+<li>为什么不能统一地从<strong>Leader</strong>拿<strong>sessionId</strong>？其实想想，也是可以的，只是<strong>createSession</strong>是<strong>synchronized</strong>，在<strong>Follower</strong>上操作能稍微提高一些并发。</li>
+<li>为什么大量使用<strong>synchronized</strong>，而不是使用锁？<strong>zk</strong>的代码里面，确实是非常大量地使用<strong>synchronized</strong>。只是因为<strong>zk</strong>不是很注重性能，使用<strong>synchronized</strong>会使代码看起来更易懂一些么。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://blog.tonyseek.com/post/zookeeper-sessionid/" target="_blank" rel="external">https://blog.tonyseek.com/post/zookeeper-sessionid/</a></li>
+<li><a href="http://damacheng009.iteye.com/blog/2085968" target="_blank" rel="external">http://damacheng009.iteye.com/blog/2085968</a></li>
+<li><a href="http://agapple.iteye.com/blog/1292129" target="_blank" rel="external">http://agapple.iteye.com/blog/1292129</a></li>
+<li><a href="http://stackoverflow.com/questions/17894808/how-do-one-read-the-zookeeper-transaction-log" target="_blank" rel="external">http://stackoverflow.com/questions/17894808/how-do-one-read-the-zookeeper-transaction-log</a></li>
+</ul>
+]]></content>
     
     <summary type="html">
     

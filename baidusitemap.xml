@@ -4,8 +4,88 @@
 
     
   <url>
+    <loc>https://hackbuteers.github.io/2017/06/18/Apache-Kafka2/</loc>
+    <lastmod>2017-06-18T12:39:11.000Z</lastmod>
+    <data>
+        <display>
+        <title>Apache_Kafka入门（二）</title>
+        <pubTime>2017-06-18T12:27:35.000Z</pubTime>
+        
+        <tag>Kafka</tag>
+         
+         
+           
+             
+              <breadCrumb title="Kafka" url="https://hackbuteers.github.io/categories/Kafka/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hackbuteers.github.io/2017/06/18/Apache-Kafka1/</loc>
+    <lastmod>2017-06-18T12:35:13.000Z</lastmod>
+    <data>
+        <display>
+        <title>Apache_Kafka入门（一）</title>
+        <pubTime>2017-06-18T12:27:22.000Z</pubTime>
+        
+        <tag>Kafka</tag>
+         
+         
+           
+             
+              <breadCrumb title="Kafka" url="https://hackbuteers.github.io/categories/Kafka/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hackbuteers.github.io/2017/06/18/Storm%E9%9B%86%E7%BE%A4%E7%9A%84%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2017-06-18T12:34:47.000Z</lastmod>
+    <data>
+        <display>
+        <title>Storm集群的搭建</title>
+        <pubTime>2017-06-18T12:34:02.000Z</pubTime>
+        
+        <tag>ZooKeeper</tag>
+         
+         
+           
+             
+              <breadCrumb title="ZooKeeper" url="https://hackbuteers.github.io/categories/ZooKeeper/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hackbuteers.github.io/2017/06/18/ZooKeeper/</loc>
+    <lastmod>2017-06-18T12:25:53.000Z</lastmod>
+    <data>
+        <display>
+        <title>ZooKeeper - 从懵逼到淡定</title>
+        <pubTime>2017-06-18T12:20:30.000Z</pubTime>
+        
+        <tag>ZooKeeper</tag>
+         
+         
+           
+             
+              <breadCrumb title="ZooKeeper" url="https://hackbuteers.github.io/categories/ZooKeeper/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://hackbuteers.github.io/2017/06/17/ZK-session/</loc>
-    <lastmod>2017-06-17T14:12:26.000Z</lastmod>
+    <lastmod>2017-06-18T12:17:42.000Z</lastmod>
     <data>
         <display>
         <title>ZooKeeper - Session Lifetime</title>
