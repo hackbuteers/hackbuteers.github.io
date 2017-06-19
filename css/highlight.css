@@ -81,7 +81,7 @@ figure.highlight.plain .gutter,
 figure.highlight .gutter,
 .codeblock .gutter {
   background: #073642;
-  padding: 0.3em 15px;
+  padding: 1em 15px 1em 1em;
 }
 figure.highlight .gutter .line,
 .codeblock .gutter .line {
@@ -90,6 +90,7 @@ figure.highlight .gutter .line,
 figure.highlight .line,
 .codeblock .line {
   font-size: 13px;
+  height: 13px;
   color: #93a1a1;
 }
 figure.highlight .line.marked,
@@ -98,7 +99,7 @@ figure.highlight .line.marked,
 }
 figure.highlight .code,
 .codeblock .code {
-  padding: 0.3em 15px 0.3em 1em;
+  padding: 1em 15px 1em 1em;
   width: 100%;
 }
 .gist .line,
