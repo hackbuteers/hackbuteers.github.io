@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://hackbuteers.github.io/"/>
-  <updated>2017-06-18T12:34:47.000Z</updated>
+  <updated>2017-06-28T13:30:37.000Z</updated>
   <id>https://hackbuteers.github.io/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JAVA - jar包冲突</title>
+    <link href="https://hackbuteers.github.io/2017/06/28/package-conflict/"/>
+    <id>https://hackbuteers.github.io/2017/06/28/package-conflict/</id>
+    <published>2017-06-28T10:29:21.000Z</published>
+    <updated>2017-06-28T13:30:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、背景"><a href="#1、背景" class="headerlink" title="1、背景"></a>1、背景</h2><p>库存中心在一次pom依赖调整之后，部署到日常时报了这个异常:<br><a href="http://orimyicvd.bkt.clouddn.com/exception.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/exception.jpg"></a><br>堆栈显示在spring代码里面抛了NPE，SerializableTypeWrapper类的239行是这样的：<br><a href="http://orimyicvd.bkt.clouddn.com/wrapper.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/wrapper.jpg"></a><br>很明显，代码执行到这里时EQUALS_METHOD这个静态成员为null。看看这个字段的初始化地方：<br><a href="http://orimyicvd.bkt.clouddn.com/method.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/method.jpg"></a><br>在IDEA里面查找ReflectionUtils，发现有两个版本：<br><a href="http://orimyicvd.bkt.clouddn.com/ReflectionUtils.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/ReflectionUtils.jpg"></a><br>4.0.6版本的spring-core这个jar包中ReflectionUtils.findMethod的实现是这样的：<br><a href="http://orimyicvd.bkt.clouddn.com/findMethod.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/findMethod.jpg"></a><br>而2.5.6版本的spring这个jar包中ReflectionUtils.findMethod的实现是这样的：<br><a href="http://orimyicvd.bkt.clouddn.com/findMethod2.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/findMethod2.jpg"></a></p>
+<p>第一眼看过去，发现是运行时加载了2.5.6版本的<strong>ReflectionUtils.findMethod</strong>导致，因为它的实现里面while循环直接进不去（传进来的就是Object.class），直接返回null。<br>本来以为问题到此结束了，但是回过头来看了下参数，发现不对——老版本的方法第三个形参明明是Class[]类型的，但是调用的地方传了一个Object.class，应该报NoSuchMethodError才对啊！这里怎么没有抛异常，还是说把异常吃掉了？想不清楚，直接debug启动过程吧。刚开始的时候，在老版本的<strong>ReflectionUtils.findMethod</strong>里面打断点，但是不知道为什么一直没进来，因此更加坚信了此处NoSuchMethodError被吞掉了。<br>上google和stackoverflow上查了很久，并没有查到类似的问题；没办法只好自己模拟，本地写了几个类，编译好之后，修改其中一个类方法的参数，再单独编译这个类（模拟jar包冲突的情况），运行的时候直接抛了NoSuchMethodError…此路不通！<br>这个时候开始怀疑是类加载器的原因，因为日常部署是部署在tomcat容器中的，应用代码是通过WebAppClassLoader这个类加载器加载的，会不会是这个类加载器加载类的时候修改了类初始化过程，将中抛出来的异常给捕获了。于是翻看WebAppClassLoader的代码，并没有发现这个逻辑（实际上也做不到这样，类初始化过程是JVM调用的）。<br>此处卡了很久。。。</p>
+<p>后面再次debug，发现那个本应该抛异常的调用，居然进入了方法体：<br><a href="http://orimyicvd.bkt.clouddn.com/debugpack.png" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/debugpack.png"></a><br>并且第三个参数以数组的形式传了进来！不能理解了，调用的地方明明是这样的:<br><a href="http://orimyicvd.bkt.clouddn.com/type.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/type.jpg"></a><br>怎么运行时Object.class会自动转换成Class[]呢？<br>上机器查看class文件，<strong>ReflectionUtils.class</strong>反编译出来的代码片段如下，确实是数组：<br><a href="http://orimyicvd.bkt.clouddn.com/shuzu.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/shuzu.jpg"></a><br><strong>SerializableTypeWrapper.class</strong>反编译出来的代码片段如下：<br><a href="http://orimyicvd.bkt.clouddn.com/newclass.jpg" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/newclass.jpg"></a><br>看到这里才恍然大悟，原来，编译打包时用的是新版本的ReflectionUtils类，它的findMethod方法的第三个参数是可变参数，因此调用的地方实参被编译成数组了，运行时加载了另一个版本的ReflectionUtils，它的方法参数是数组，正好是兼容的，因此没有抛异常，方法体返回了null。</p>
+<h2 id="2、总结："><a href="#2、总结：" class="headerlink" title="2、总结："></a>2、总结：</h2><p>纠结了大半天时间，终于查清问题的根本原因了，算是有点收获~</p>
+<ul>
+<li>之前遇到jar包冲突总是伴随着NoClassDefError或者NoSuchMethodError，而这次遇到的情况是在其他地方抛了个NPE，而直接调用的地方方法签名居然是兼容的，只是方法体的逻辑不同，这种情况非常具有迷惑性（如果不是抛NPE，而是计算得到另一个值，将会非常难查）</li>
+<li>对可变参数和数组参数的区别有点进一步了解</li>
+<li>重温了类初始化过程</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1、背景&quot;&gt;&lt;a href=&quot;#1、背景&quot; class=&quot;headerlink&quot; title=&quot;1、背景&quot;&gt;&lt;/a&gt;1、背景&lt;/h2&gt;&lt;p&gt;库存中心在一次pom依赖调整之后，部署到日常时报了这个异常:&lt;br&gt;&lt;a href=&quot;http://orimyicvd.bk
+    
+    </summary>
+    
+      <category term="JAVA" scheme="https://hackbuteers.github.io/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="https://hackbuteers.github.io/tags/JAVA/"/>
+    
+  </entry>
   
   <entry>
     <title>Storm集群的搭建</title>
