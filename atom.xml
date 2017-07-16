@@ -52,7 +52,7 @@
     <link href="https://hackbuteers.github.io/2017/07/16/spring-boot%E5%90%AF%E5%8A%A8%E8%A7%A3%E8%AF%BB/"/>
     <id>https://hackbuteers.github.io/2017/07/16/spring-boot启动解读/</id>
     <published>2017-07-16T11:46:38.000Z</published>
-    <updated>2017-07-16T12:15:20.000Z</updated>
+    <updated>2017-07-16T12:47:13.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="1、背景"><a href="#1、背景" class="headerlink" title="1、背景"></a>1、背景</h2><p><strong>spring-boot</strong>可以采用java -jar embedded-container-1.0-SNAPSHOT.jar类似这样的方式直接启动应用，我们在这个过程中有几个问题我觉得是可以探究的：</p>
 <ul>
@@ -72,7 +72,7 @@
 <li>这种方式统一管理了接入方的规范要求，让第三方的接入可以按照一定的标准来执行，这样的方式是非常有利于共享共建的。</li>
 <li>配置管理和依赖管理的分离，这样的好处是，我只需要通过一个维度就管理好我的依赖<br>这里有个问题要说明，也就是上面的第二点，你肯定会有个疑问，配置里面有那么多的<strong>bean</strong>，难道很多我不需要的也要每次都加载？是不是应该我没有引入的<strong>starter</strong>就不应该被加载到？<br><a href="http://orimyicvd.bkt.clouddn.com/astarter.png" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/astarter.png"></a><br><strong>ConditionEvaluator</strong><br><strong>bean</strong>在被容器加载前会做一下判断，如果不符合会<strong>skip</strong>掉，这里的判断条件，其实都已经写在了这些<strong>config</strong>类上了，如：<br><a href="http://orimyicvd.bkt.clouddn.com/config.png" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/config.png"></a><br>这个过程<strong>spring-boot</strong>也实现了自己的<strong>Condition</strong>来做处理这些条件，所以我们也可以在这个地方进行扩展。<br><a href="http://orimyicvd.bkt.clouddn.com/Condition.png" data-fancybox="images" target="_blank" rel="external"><img src="http://orimyicvd.bkt.clouddn.com/Condition.png"></a></li>
 </ul>
-<h2 id="5、启动过程"><a href="#5、启动过程" class="headerlink" title="5、启动过程"></a>5、启动过程</h2><p><strong>spring-boot</strong>的启动一般采用<strong>SpringApplication.run</strong>来进行执行，这里的执行过程比较简单，就是先进行<strong>spring</strong>容器的加载再进行web容器的加载，具体可以看：Springboot加载自定义容器<br>这样顺着上面讲的<strong>auto-config</strong>就可以基本摸清<strong>spring-boot</strong>的启动过程了。</p>
+<h2 id="5、启动过程"><a href="#5、启动过程" class="headerlink" title="5、启动过程"></a>5、启动过程</h2><p><strong>spring-boot</strong>的启动一般采用<strong>SpringApplication.run</strong>来进行执行，这里的执行过程比较简单，就是先进行<strong>spring</strong>容器的加载再进行web容器的加载，具体可以看：<a href="https://hackbuteers.github.io/2017/07/16/Springboot%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%B9%E5%99%A8/">Springboot加载自定义容器</a><br>这样顺着上面讲的<strong>auto-config</strong>就可以基本摸清<strong>spring-boot</strong>的启动过程了。</p>
 ]]></content>
     
     <summary type="html">
