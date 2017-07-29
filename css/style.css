@@ -565,6 +565,7 @@ body {
 }
 .post .post-content {
   clear: left;
+  font-family: -apple-system, PingFang SC, Hiragino Sans GB, Arial, Microsoft YaHei, Helvetica Neue, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.77;
