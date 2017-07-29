@@ -565,7 +565,8 @@ body {
 }
 .post .post-content {
   clear: left;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 400;
   line-height: 1.77;
   color: #333;
   padding-top: 15px;
@@ -589,7 +590,7 @@ body {
   font-size: 12px;
 }
 .post .post-content p {
-  margin: 0 0 1.234em;
+  margin: 0 0 -0.466em;
 }
 .post .post-content p code {
   margin: 0 5px;
